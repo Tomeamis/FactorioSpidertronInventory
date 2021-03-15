@@ -1,0 +1,9 @@
+{
+  "name": "SpidertronInventoryImproved",
+  "version": "0.1.0",
+  "title": "IMproved Spidertron Inventory",
+  "author": "Tomeamis",
+  "factorio_version": "1.1",
+  "dependencies": ["base >= 1.0"],
+  "description": "Fix spidertron inventory"
+}
