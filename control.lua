@@ -26,8 +26,8 @@ end
 script.on_nth_tick(60, OnTick)
 
 script.on_event(defines.events.on_built_entity, function(event)
-	for SpiderName in SpiderNames do
-		if event.created_entity.name == SpiderName
+	for _, name in pairs(SpiderNames) do
+		if event.created_entity.name == name
 		then
 			AddSpider(event.created_entity)
 		end
@@ -38,17 +38,10 @@ script.on_event(defines.events.on_entity_destroyed, function (event)
 	global.Spiders[event.registration_number] = nil
 end)
 
-script.on_event(
-	defines.events.on_player_mined_entity,
-	function(event)
-		for key, spider in pairs(global.Spiders) do
-			if spider == event.entity then
-				global.Spiders[key] = nil
-			end
-		end
-	end,
-	{{filter = "name", name = SpiderNames[1]}}
-)
+local mineFilters = {}
+for _, Name in pairs(SpiderNames) do
+	table.insert(mineFilters, {filter = "name", name = Name})
+end
 
 script.on_event(
 	defines.events.on_player_mined_entity,
@@ -59,15 +52,5 @@ script.on_event(
 			end
 		end
 	end,
-	{{filter = "name", name = SpiderNames[2]}}
-	
-script.on_event(
-	defines.events.on_player_mined_entity,
-	function(event)
-		for key, spider in pairs(global.Spiders) do
-			if spider == event.entity then
-				global.Spiders[key] = nil
-			end
-		end
-	end,
-	{{filter = "name", name = SpiderNames[3]}}
+	mineFilters
+)
