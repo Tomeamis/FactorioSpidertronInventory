@@ -1,4 +1,4 @@
-SpiderName = "spidertron"
+SpiderNames = {"spidertron", "spidertronmk2", "spidertronmk3"}
 
 function AddSpider(spider)
 	local regNum = script.register_on_entity_destroyed(spider)
@@ -6,7 +6,10 @@ function AddSpider(spider)
 end
 
 script.on_init(function()
-	local spiders = game.surfaces.nauvis.find_entities_filtered{name=SpiderName}
+	local spiders = {}
+	for SpiderName in SpiderNames do 
+		spiders.insert(game.surfaces.nauvis.find_entities_filtered{name=SpiderName})
+	end
 	global.Spiders = {}
 	for _, spider in pairs(spiders) do
 		AddSpider(spider)
@@ -23,9 +26,11 @@ end
 script.on_nth_tick(60, OnTick)
 
 script.on_event(defines.events.on_built_entity, function(event)
-	if event.created_entity.name == SpiderName
-	then
-		AddSpider(event.created_entity)
+	for SpiderName in SpiderNames do
+		if event.created_entity.name == SpiderName
+		then
+			AddSpider(event.created_entity)
+		end
 	end
 end)
 
@@ -42,5 +47,27 @@ script.on_event(
 			end
 		end
 	end,
-	{{filter = "name", name = SpiderName}}
+	{{filter = "name", name = SpiderNames[1]}}
 )
+
+script.on_event(
+	defines.events.on_player_mined_entity,
+	function(event)
+		for key, spider in pairs(global.Spiders) do
+			if spider == event.entity then
+				global.Spiders[key] = nil
+			end
+		end
+	end,
+	{{filter = "name", name = SpiderNames[2]}}
+	
+script.on_event(
+	defines.events.on_player_mined_entity,
+	function(event)
+		for key, spider in pairs(global.Spiders) do
+			if spider == event.entity then
+				global.Spiders[key] = nil
+			end
+		end
+	end,
+	{{filter = "name", name = SpiderNames[3]}}

@@ -1,9 +1,9 @@
 {
   "name": "SpidertronInventoryImproved",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "title": "Improved Spidertron Inventory",
   "author": "Tomeamis",
   "factorio_version": "1.1",
   "dependencies": ["base >= 1.0"],
-  "description": "For now, just sort the inventory of all spidertrons once every second"
+  "description": "For now, just sort the inventory of all spidertrons once every second. Supports spidertron extended mod."
 }
